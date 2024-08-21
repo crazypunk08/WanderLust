@@ -1,5 +1,19 @@
 const Listing = require("../models/listing.js");
 
+module.exports.search=async (req,res)=>{
+    try {
+        const { search } = req.query;  // Get the title query parameter from the URL
+        const allListings = await Listing.find({
+            title: { $regex: search, $options: "i" }  // "i" option makes it case-insensitive
+        });  // Convert the cursor to an array to send as a response
+        res.render("listings/index.ejs", { allListings});
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    };
+};
+
 module.exports.index=async (req, res) => {
     let { id } = req.params;
     const listings = await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}}).populate("owner");

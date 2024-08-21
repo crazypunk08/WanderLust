@@ -22,6 +22,10 @@ const validateListing = (req, res, next) => {
     }
 };
 
+//Route for search request
+router.get("/search/list",wrapAsync(listingController.search)
+);
+
 //To create a new post NEW ROUTE
 router.get("/new",isLoggedIn,listingController.renderNewform);
 
