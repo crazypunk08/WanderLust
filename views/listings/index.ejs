@@ -3,6 +3,8 @@
 <style>
     #filters{
         display: flex;
+        justify-content: center;
+        align-items: center;
         flex-wrap: wrap;
     }
     .filters{
@@ -19,6 +21,14 @@
     .filters p{
         font-size: 0.8rem;
     }
+
+    @media (max-width: 780px) {
+        /* CSS rules for screens smaller than 600px */
+        #filters{
+            display: none;
+        }
+    }
+    
 </style>
 
 <body>
