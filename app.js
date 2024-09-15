@@ -19,8 +19,9 @@ const User = require("./models/user.js");
 const engine = require('ejs-mate');
 app.engine('ejs', engine);
 // --------------------------------------------------------
-// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; THIS IS FOR CONNECTION WITH MONGODB DATABASE WITH THE LOCAL SYSTEM
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust"; //THIS IS FOR CONNECTION WITH MONGODB DATABASE WITH THE LOCAL SYSTEM
 const dburl=process.env.ATLASDB; //CONNECTING WITH THE MONGODB CLOUD
+// const dburl=MONGO_URL; 
 const path = require("path");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -39,10 +40,10 @@ main()
 async function main() {
     await mongoose.connect(dburl);
 }
-
-// app.get("/", (req, res) => {
-//     res.send("Hi I am root");
-// });
+//Root directory
+app.get('/', (req, res) => {
+    res.redirect("/listings");
+  });
 
 //here we are using mongodb for session storage rather than default memory storage
 const store = MongoStore.create({
@@ -64,8 +65,8 @@ const sessionOptions = {
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,//Age in milliseconds We are saving the data of user for 7 days
+        httpOnly: true,//Session deals with only HTTPS request
     },
 };
 
@@ -100,12 +101,12 @@ app.use("/", userRouter);
 //Defining error handling middleware
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page not found"));
+    
 })
 
 app.use((err, req, res, next) => {
     let { statusCode = 500, message = "Something went wrong" } = err;
     res.status(statusCode).render("listings/error.ejs", { message });
-    // res.status(statusCode).send(message);
 });
 
 
