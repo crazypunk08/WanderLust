@@ -2,26 +2,21 @@
 
     <body>
         <div class="row">
-            <div class="col-8 offset-2">
-
-                <center>
-                    <h3><%= listings.title %></h3>
-                </center>
+            <div class="col-8 offset-2 ">
+                    <h3 class="mb-2"><%= listings.title %></h3>
                 <div class="card listing-card">
-                    <center>
-                        <div class="col-6 img-section">
+                        <div class="col-6 img-section mb-2">
                             <img src="<%= listings.image.url %>" class="card-img-top show-img" alt="listings image">
                         </div>
-                    </center>
                     <div class="row">
                         <div class="card-body">
                             <p class="card-text">
                                     <b>Owned by</b> <%= listings.owner.username %></p>
                                 <br>
                                 <p class="card-text"><b>Description:</b> &nbsp;<%= listings.description %> </p>
-                                <p class="card-text"><b>Price per night</b>&nbsp;&#8377;<%= listings.price.toLocaleString("en-IN")%></p>
-                                    <p class="card-text"><b>Hotel Location</b>&nbsp; <%= listings.location %></p>
-                                        <p class="card-text"> <b>Country</b>&nbsp;<%= listings.country %></p
+                                <p class="card-text"><b>Price per night:</b>&nbsp;&#8377;<%= listings.price.toLocaleString("en-IN")%></p>
+                                    <p class="card-text"><b>Hotel Location:</b>&nbsp; <%= listings.location %></p>
+                                        <p class="card-text"> <b>Country:</b>&nbsp;<%= listings.country %></p
                         </div>
                     </div>
                 </div>
